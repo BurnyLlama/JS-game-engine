@@ -1,5 +1,6 @@
 const keyboard = {
     pressed: {},
+
     init: () => { 
         window.addEventListener("keydown", event => 
             keyboard.pressed[event.code] = true
@@ -9,6 +10,7 @@ const keyboard = {
             keyboard.pressed[event.code] = false
         )
     },
+
     key: key => {
         return keyboard.pressed[key]
     }

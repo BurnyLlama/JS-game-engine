@@ -1,7 +1,10 @@
 import createCanvas from "./engine/canvas.js"
 import drawing from "./engine/drawing.js"
-import animate from "./engine/update.js"
+import update from "./engine/update.js"
 import keyboard from "./engine/keyboard.js"
+import sound from "./engine/sound.js"
+import math from "./engine/math.js"
+
 
 
 const { canvas, ctx } = createCanvas()
@@ -17,20 +20,33 @@ let p = {
 
 keyboard.init()
 
-animate(() => {
+const music = sound("music.mp3", 5)
+music.loop = true
+
+let mute = -1
+
+update(() => {
     draw.fill("#FFF")
+    draw.rect(0,0,canvas.width,canvas.height,"transparent","black",10)
 
-    if (color < 255) {
-        draw.circ(p.x, p.y, 70, `rgb(0, 0, ${color})`)
-        color += 1
-    } else {
-        color = 0
+    draw.circ(p.x, p.y, 70, `rgb(0, 0, ${color})`)
+
+    if (keyboard.key("KeyD")) p.x += 2
+    if (keyboard.key("KeyA")) p.x -= 2
+
+    if (keyboard.key("KeyW")) p.y -= 2
+    if (keyboard.key("KeyS")) p.y += 2
+
+    if (keyboard.key("Space")) sound.play("sound.wav", 5)
+
+    if (keyboard.key("KeyM")) {
+        if (mute < 0) {
+            music.muted = true
+            mute *= -1
+        } else {
+            music.muted = false
+            mute *= -1
+        }
     }
-
-    if (keyboard.key("KeyD")) p.x += 1
-    if (keyboard.key("KeyA")) p.x -= 1
-
-    if (keyboard.key("KeyW")) p.y -= 1
-    if (keyboard.key("KeyS")) p.y += 1
-
+    console.log(math.random(6, 1))
 })

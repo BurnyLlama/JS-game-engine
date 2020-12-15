@@ -1,4 +1,3 @@
-
 let loop
 
 const initAnimation = (func) => {
