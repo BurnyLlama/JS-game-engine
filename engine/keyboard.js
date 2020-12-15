@@ -1,21 +1,16 @@
-const keyboard = (actions) => { 
-    window.addEventListener("keydown", event => {
-        console.log(`Debug:`, event)
-        if (actions[event.code]) actions[event.code].pressed = true
-        console.log(`Debug:`, actions)
-    })
+const keyboard = {
+    pressed: {},
+    init: () => { 
+        window.addEventListener("keydown", event => 
+            keyboard.pressed[event.code] = true
+        )
 
-    window.addEventListener("keyup", event => {
-        console.log(`Debug:`, event)
-        if (actions[event.code]) actions[event.code].pressed = false
-    })
-    
-    return {
-        actions: actions,
-        execute: (_actions) => 
-            Object.keys(_actions).forEach(action =>
-                _actions[action].pressed && _actions[action].func()
-            )
+        window.addEventListener("keyup", event => 
+            keyboard.pressed[event.code] = false
+        )
+    },
+    key: key => {
+        return keyboard.pressed[key]
     }
 }
 

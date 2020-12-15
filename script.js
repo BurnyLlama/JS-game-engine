@@ -4,7 +4,7 @@ import animate from "./engine/update.js"
 import keyboard from "./engine/keyboard.js"
 
 
-const {canvas, ctx} = createCanvas()
+const { canvas, ctx } = createCanvas()
 const draw = drawing(canvas, ctx)
 
 
@@ -15,14 +15,7 @@ let p = {
     y: 400
 }
 
-const keys = keyboard({
-    keyA: {
-        pressed: false,
-        func: () => 
-            console.log('Test')
-    }
-})
-
+keyboard.init()
 
 animate(() => {
     draw.fill("#FFF")
@@ -34,5 +27,10 @@ animate(() => {
         color = 0
     }
 
-    keys.execute(keys.actions)
+    if (keyboard.key("KeyD")) p.x += 1
+    if (keyboard.key("KeyA")) p.x -= 1
+
+    if (keyboard.key("KeyW")) p.y -= 1
+    if (keyboard.key("KeyS")) p.y += 1
+
 })
