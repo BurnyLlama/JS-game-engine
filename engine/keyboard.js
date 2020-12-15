@@ -1,14 +1,15 @@
 const keyboard = {
     pressed: {},
 
-    init: () => { 
+    init: callback => { 
         window.addEventListener("keydown", event => 
             keyboard.pressed[event.code] = true
         )
 
-        window.addEventListener("keyup", event => 
+        window.addEventListener("keyup", event => {
             keyboard.pressed[event.code] = false
-        )
+            callback(event.code)
+        })
     },
 
     key: key => {
