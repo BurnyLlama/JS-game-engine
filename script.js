@@ -1,13 +1,15 @@
-import createCanvas from "./engine/canvas.js"
+import canvasCreate from "./engine/canvas.js"
 import drawing from "./engine/drawing.js"
 import update from "./engine/update.js"
 import keyboard from "./engine/keyboard.js"
 import sound from "./engine/sound.js"
 import math from "./engine/math.js"
+import mouse from "./engine/mouse.js"
 
 
 
-const { canvas, ctx } = createCanvas()
+
+const { canvas, ctx, screenshot } = canvasCreate()
 const draw = drawing(canvas, ctx)
 
 
@@ -23,13 +25,15 @@ let p = {
 keyboard.init(key => {
     switch (key) {
         case "KeyQ":
-            console.log("One single key-stroke!")
+            screenshot()
             break
 
         default:
             break
     }
 })
+
+mouse.init(canvas, event => console.log(event))
 
 
 update(dt => {
@@ -38,9 +42,7 @@ update(dt => {
 
     draw.circ(p.x, p.y, 70, `rgb(0, 0, ${color})`)
 
-    if (keyboard.key("KeyD")) p.x += dt/10
-    if (keyboard.key("KeyA")) p.x -= dt/10
+    p.x = mouse.state.x
+    p.y = mouse.state.y
 
-    if (keyboard.key("KeyW")) p.y -= dt/10
-    if (keyboard.key("KeyS")) p.y += dt/10
 }, 60)

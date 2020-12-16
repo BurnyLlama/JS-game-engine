@@ -6,7 +6,18 @@ const createCanvas = (width=640, height=480, context="2d") => {
 
     return {
         canvas: canvas,
-        ctx: canvas.getContext(context)
+        ctx: canvas.getContext(context),
+        screenshot: () => {
+            const image = canvas.toDataURL("image/png")
+            const download = document.createElement("a")
+            
+            download.setAttribute("download", "Screenshot.png")
+            download.href = image
+            document.body.appendChild(download)
+
+            download.click()
+            download.remove()
+        }
     }
 }
 
