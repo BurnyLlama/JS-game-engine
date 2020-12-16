@@ -54,6 +54,9 @@ const init = (canvas, ctx) => {
         }) => {
             setProperties(ctx, color, stroke, lineWidth)
             ctx.font = `${font.size}px ${font.family}`
+            ctx.textAlign = font.textAlign
+            ctx.textBaseline = font.textBaseline
+            ctx.direction = font.direction
 
             ctx.fillText(text, posx, posy, maxWidth ? maxWidth : font.size * text.length)
             ctx.strokeText(text, posx, posy, maxWidth ? maxWidth : font.size * text.length)
